@@ -1,8 +1,8 @@
 # SphereAR: Hyperspherical Latents Improve Continuous-Token Autoregressive
 
-<div align="center">
-[![arXiv](https://img.shields.io/badge/arXiv%20paper-2509.24335-b31b1b.svg)](https://arxiv.org/abs/2509.24335)&nbsp;
-</div>
+[![arXiv](https://img.shields.io/badge/arXiv-2509.24335-b31b1b.svg)](https://arxiv.org/abs/2509.24335)&nbsp;
+[![huggingface](https://img.shields.io/badge/%F0%9F%A4%97%20HuggingFace-SphereAR-yellow)](https://huggingface.co/guolinke/SphereAR)&nbsp;
+
 
 <p align="center">
 <img src="figures/grid.jpg" width=720>
@@ -22,7 +22,7 @@ This is the official PyTorch implementation of paper [Hyperspherical Latents Imp
 
 ## Introduction
 
-<p align="center"><img src="figures/overview.png" width=640><img src="figures/fid_vs_params.png" width=285></p>
+<p align="center"><img src="figures/overview.png" width=490><img src="figures/fid_vs_params.png" width=218></p>
 
 SphereAR is a simple yet effective approach to continuous-token autoregressive (AR) image generation: it makes AR scale-invariant by constraining all AR inputs and outputs---**including after CFG**---to lie on a fixed-radius hypersphere (constant L2 norm) via hyperspherical VAEs. 
 
