@@ -63,24 +63,30 @@ SphereAR-B:
 ```shell
 ckpt=your_ckpt_path
 result_path=your_result_path
-torchrun --nnodes=1 --nproc_per_node=8 --node_rank=0 sample_ddp.py --model SphereAR-B --ckpt $ckpt --cfg-scale 4.5 --sample-dir $result_path   --per-proc-batch-size 256 --to-npz
+torchrun --nnodes=1 --nproc_per_node=8 --node_rank=0 \
+sample_ddp.py --model SphereAR-B --ckpt $ckpt --cfg-scale 4.5 \
+--sample-dir $result_path   --per-proc-batch-size 256 --to-npz
 ```
 
 SphereAR-L:
 ```shell
 ckpt=your_ckpt_path
 result_path=your_result_path
-torchrun --nnodes=1 --nproc_per_node=8 --node_rank=0 sample_ddp.py --model SphereAR-L --ckpt $ckpt --cfg-scale 4.6 --sample-dir $result_path   --per-proc-batch-size 256 --to-npz
+torchrun --nnodes=1 --nproc_per_node=8 --node_rank=0 \
+sample_ddp.py --model SphereAR-L --ckpt $ckpt --cfg-scale 4.6 \
+--sample-dir $result_path   --per-proc-batch-size 256 --to-npz
 ```
 
 SphereAR-H:
 ```shell
 ckpt=your_ckpt_path
 result_path=your_result_path
-torchrun --nnodes=1 --nproc_per_node=8 --node_rank=0 sample_ddp.py --model SphereAR-H --ckpt $ckpt --cfg-scale 4.5 --sample-dir $result_path   --per-proc-batch-size 256 --to-npz
+torchrun --nnodes=1 --nproc_per_node=8 --node_rank=0 \
+sample_ddp.py --model SphereAR-H --ckpt $ckpt --cfg-scale 4.5 \
+--sample-dir $result_path   --per-proc-batch-size 256 --to-npz
 ```
 
-2. Compute metrics following [OpenAI’s evaluation protocol]((https://github.com/openai/guided-diffusion/tree/main/evaluations). You should download the [reference batch](https://openaipublic.blob.core.windows.net/diffusion/jul-2021/ref_batches/imagenet/256/VIRTUAL_imagenet256_labeled.npz), and run `python evaluator.py VIRTUAL_imagenet256_labeled.npz your_generated.npz` for the metric. TensorFlow is required, and we use ```tensorflow==2.19.1```.
+2. Compute metrics following [OpenAI’s evaluation protocol](https://github.com/openai/guided-diffusion/tree/main/evaluations). You should download the [reference batch](https://openaipublic.blob.core.windows.net/diffusion/jul-2021/ref_batches/imagenet/256/VIRTUAL_imagenet256_labeled.npz), and run `python evaluator.py VIRTUAL_imagenet256_labeled.npz your_generated.npz` for the metric. TensorFlow is required, and we use ```tensorflow==2.19.1```.
 
 
 ### Reproduce our training:
@@ -92,16 +98,22 @@ torchrun --nnodes=1 --nproc_per_node=8 --node_rank=0 sample_ddp.py --model Spher
 ```shell
 data_path=your_data_path/ILSVRC2012_img_train.tar
 result_path=your_resulet_path
-torchrun --nnodes=1 --nproc_per_node=8 --node_rank=0 train.py --results-dir $result_path --data-path $data_path --image-size 256 --epochs 100 --patch-size 16 --latent-dim 16  --vae-only --lr 1e-4 --global-batch-size 256 --warmup-steps -1 --decay-start -1
+torchrun --nnodes=1 --nproc_per_node=8 --node_rank=0 \
+train.py --results-dir $result_path --data-path $data_path \
+--image-size 256 --epochs 100 --patch-size 16 --latent-dim 16  --vae-only \
+--lr 1e-4 --global-batch-size 256 --warmup-steps -1 --decay-start -1
 ```
 
-3. Training the AR model:
+3. Train the AR model:
 
 ```shell
 data_path=your_data_path/ILSVRC2012_img_train.tar
 result_path=your_resulet_path
 vae_ckpt=your_vae_path
-torchrun --nproc_per_node=8 --master_addr=$WORKER_0_HOST --node_rank=$LOCAL_RANK --master_port=$WORKER_0_PORT --nnodes=$WORKER_NUM  train.py --results-dir $result_path --data-path $data_path --image-size 256 --model SphereAR-B --epochs 400 --patch-size 16 --latent-dim 16  --lr 3e-4 --global-batch-size 512 --trained-vae $vae_ckpt --ema 0.9999
+torchrun --nproc_per_node=8 --master_addr=$WORKER_0_HOST --node_rank=$LOCAL_RANK --master_port=$WORKER_0_PORT --nnodes=$WORKER_NUM \
+train.py --results-dir $result_path --data-path $data_path --image-size 256 \
+--model SphereAR-B --epochs 400 --patch-size 16 --latent-dim 16 \
+--lr 3e-4 --global-batch-size 512 --trained-vae $vae_ckpt --ema 0.9999
 ```
 You can use the script above to train `SphereAR-B`; to train other sizes, set `--model` to `SphereAR-L` or `SphereAR-H`.
 We trained on A100 GPUs with the following setups: 8×A100 for SphereAR-B, 16×A100 for SphereAR-L, and 32×A100 for SphereAR-H.
