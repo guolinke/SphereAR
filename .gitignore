@@ -137,5 +137,4 @@ wandb
 weights*
 ft_weights*
 finetune_scripts/*.dict
-*.png 
 *.pdf
