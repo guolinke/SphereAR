@@ -75,7 +75,7 @@ def main(args):
         f"{model_string_name}-{ckpt_string_name}-size-{args.image_size}-"
         f"steps-{args.sample_steps}-cfg-{args.cfg_scale}-seed-{args.seed}"
     )
-    if args.use_ema:
+    if not args.no_ema:
         folder_name += "-ema"
     sample_folder_dir = f"{args.sample_dir}/{folder_name}"
 
