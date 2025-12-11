@@ -1,4 +1,4 @@
-# SphereAR: Hyperspherical Latents Improve Continuous-Token Autoregressive
+# SphereAR: Hyperspherical Latents Improve Continuous-Token Autoregressive Generation
 
 [![arXiv](https://img.shields.io/badge/arXiv-2509.24335-b31b1b.svg)](https://arxiv.org/abs/2509.24335)&nbsp;
 [![huggingface](https://img.shields.io/badge/%F0%9F%A4%97%20HuggingFace-SphereAR-yellow)](https://huggingface.co/guolinke/SphereAR)&nbsp;
@@ -8,7 +8,7 @@
 <img src="figures/grid.jpg" width=780>
 <p>
 
-This is the official PyTorch implementation of paper [Hyperspherical Latents Improve Continuous-Token Autoregressive](https://arxiv.org/abs/2509.24335).
+This is the official PyTorch implementation of paper [Hyperspherical Latents Improve Continuous-Token Autoregressive Generation](https://arxiv.org/abs/2509.24335).
 
 ```
 @article{ke2025hyperspherical,
